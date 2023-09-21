@@ -1,7 +1,7 @@
 " Vim plug-in
 " Author: 0x501D
 
-function! Play_voice()
+function! PlayVoice()
     let line = getline('.')
     if match(line, ' :voice=')
         let comment_path = substitute(line, '.* :voice="\(.*\)".*', '\1', '') 
@@ -10,5 +10,3 @@ function! Play_voice()
         endif
     endif
 endfunction
-
-nnoremap <silent> <F7> :call Play_voice()<CR>
