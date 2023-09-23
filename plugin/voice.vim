@@ -20,7 +20,7 @@ function! PlayVoice()
     endif
 
     let line = getline('.')
-    if match(line, ' :voice=')
+    if match(line, ' :voice=') > 0
         let comment_path = substitute(line, '.* :voice="\(.*\)".*', '\1', '') 
         if len(comment_path) > 0
             let cmd = ["mpv", comment_path]
