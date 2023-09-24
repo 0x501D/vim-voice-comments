@@ -59,7 +59,7 @@ function! RecVoice()
                     \ substitute(reltimestr(reltime()), '\.', '', 'g') .. '.ogg'
 
 
-        echom 'recording' .. s:random_name
+        echom 'recording: ' .. s:random_name
         let cmd = ["rec", s:random_name]
         let s:rec_job = job_start(cmd, {
                     \ 'out_cb': {channel, msgs -> s:on_out(msgs)},})
