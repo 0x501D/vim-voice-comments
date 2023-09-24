@@ -57,7 +57,6 @@ function! RecVoice()
     if len(getline('.')) == 0
         let s:random_name = './' ..
                     \ substitute(reltimestr(reltime()), '\.', '', 'g') .. '.ogg'
-        echom s:random_name
 
         let cmd = ["rec", s:random_name]
         let s:rec_job = job_start(cmd, {
