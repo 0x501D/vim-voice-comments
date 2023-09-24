@@ -32,7 +32,6 @@ function! PlayVoice()
                         \ 'err_cb': {channel, msgs ->
                         \ s:on_out(msgs, 'playing: ' .. comment_path .. ' ')},})
             let s:is_playing = 1
-            echom 'playing: ' .. comment_path
         endif
     endif
 endfunction
@@ -57,12 +56,16 @@ function! RecVoice()
     endif
 
     if len(getline('.')) == 0
+        let format = get(g:, 'voice_comment_format', 'ogg')
         let s:random_name = './' ..
-                    \ substitute(reltimestr(reltime()), '\.', '', 'g') .. '.ogg'
+                    \ substitute(reltimestr(reltime()), '\.', '', 'g') ..
+                    \ '.' .. format
 
-        echom 'recording: ' .. s:random_name
         let cmd = ["rec", s:random_name]
-        let s:rec_job = job_start(cmd, {})
+        let s:rec_job = job_start(cmd, {
+                        \ 'err_cb': {channel, msgs ->
+                        \ s:on_out(msgs, 'recording: ' .. s:random_name ..
+                        \ ' ')},})
         let s:is_recording = 1
     endif
 endfunction
