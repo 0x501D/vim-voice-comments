@@ -27,5 +27,4 @@ Pressing F8 again will end the recording.
 [![Recording](https://img.youtube.com/vi/wumX-MIJlWo/1.jpg)](https://www.youtube.com/watch?v=wumX-MIJlWo)
 
 ## Requirements
-* `mpv` (media-video/mpv)
-* `rec` (media-sound/sox)
+* `rec`,`play` (media-sound/sox)

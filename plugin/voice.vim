@@ -7,8 +7,8 @@ let s:play_job = {}
 let s:rec_job = {}
 let s:random_name = ''
 
-function! s:on_out(msgs)
-    echom a:msgs
+function! s:on_out(msgs, title)
+    echom a:title .. a:msgs
 endfunction
 
 function! s:on_play_exit()
@@ -26,11 +26,13 @@ function! PlayVoice()
     if match(line, ' :voice=') > 0
         let comment_path = substitute(line, '.* :voice="\(.*\)".*', '\1', '') 
         if len(comment_path) > 0
-            let cmd = ["mpv", comment_path]
+            let cmd = ["play", comment_path]
             let s:play_job = job_start(cmd, {
                         \ 'exit_cb': {job, status -> s:on_play_exit()},
-                        \ 'out_cb': {channel, msgs -> s:on_out(msgs)},})
+                        \ 'err_cb': {channel, msgs ->
+                        \ s:on_out(msgs, 'playing: ' .. comment_path .. ' ')},})
             let s:is_playing = 1
+            echom 'playing: ' .. comment_path
         endif
     endif
 endfunction
@@ -58,11 +60,9 @@ function! RecVoice()
         let s:random_name = './' ..
                     \ substitute(reltimestr(reltime()), '\.', '', 'g') .. '.ogg'
 
-
         echom 'recording: ' .. s:random_name
         let cmd = ["rec", s:random_name]
-        let s:rec_job = job_start(cmd, {
-                    \ 'out_cb': {channel, msgs -> s:on_out(msgs)},})
+        let s:rec_job = job_start(cmd, {})
         let s:is_recording = 1
     endif
 endfunction
