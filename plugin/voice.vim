@@ -23,8 +23,9 @@ function! PlayVoice()
     endif
 
     let line = getline('.')
-    if match(line, ' :voice=') > 0
-        let comment_path = substitute(line, '.* :voice="\(.*\)".*', '\1', '') 
+    if match(line, ' voice:') > 0
+        let comment_path = substitute(line, '^.* voice:\(.*\)$', '\1', '')
+        let comment_path = substitute(comment_path, '\(.*\)\s\*/', '\1', '')
         if len(comment_path) > 0
             let cmd = ["play", comment_path]
             let s:play_job = job_start(cmd, {
@@ -43,13 +44,13 @@ function! RecVoice()
 
         let type = &filetype
         if type ==# 'c'
-            call setline('.', '/* :voice="' .. s:random_name .. '" */')
+            call setline('.', '/* voice:' .. s:random_name .. ' */')
         elseif type ==# 'cpp' || type ==# 'rust'
-            call setline('.', '// :voice="' .. s:random_name .. '"')
+            call setline('.', '// voice:' .. s:random_name)
         elseif type ==# 'sh' || type == 'python'
-            call setline('.', '# :voice="' .. s:random_name .. '"')
+            call setline('.', '# voice:' .. s:random_name)
         else
-            call setline('.', '<comment this> :voice="' .. s:random_name .. '"')
+            call setline('.', '<comment this> voice=:' .. s:random_name)
         endif
 
         return

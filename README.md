@@ -10,7 +10,7 @@ nnoremap <silent> <F8> :call RecVoice()<CR>
 
 ## Usage example
 ```c
-/* :voice="~/stuff/bruh.ogg" */
+/* voice:~/stuff/bruh.ogg */
 int (*c(int (*cb(void))(int)))(int)
 {
     return cb();
