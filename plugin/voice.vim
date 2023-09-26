@@ -50,7 +50,8 @@ function! RecVoice()
         elseif type ==# 'sh' || type == 'python'
             call setline('.', '# voice:' .. s:random_name)
         else
-            call setline('.', '<comment this> voice=:' .. s:random_name)
+            let comment = printf(&commentstring, ' voice:' .. s:random_name)
+            call setline('.', comment)
         endif
 
         return
