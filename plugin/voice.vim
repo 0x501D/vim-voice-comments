@@ -34,9 +34,9 @@ function! PlayVoice()
     endif
 
     let line = getline('.')
-    if match(line, ' voice:') > 0
+    if match(line, 'voice:') > 0
         let comment_path = substitute(line,
-                    \ '^.*\s\?voice:\([\./0-9a-zA-Z~_+-]\+\)\(\s\*\/\)\?$',
+                    \ '^.*\s\?voice:\([\./0-9a-zA-Z~_+-]\+\)\(\s\?\*\/\)\?$',
                     \ '\1', '')
         if len(comment_path) > 0
             let cmd = [s:play, comment_path]
